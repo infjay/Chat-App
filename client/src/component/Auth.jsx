@@ -3,18 +3,36 @@ import Cookies from 'universal-cookie'
 import axios from 'axios'
 import signinimage from '../assets/signinimage.jpg'
 
+    const initalState ={
+        fullName: "",
+        username: "",
+        password: "",
+        confirmPassword:"",
+        phoneNumber: "",
+        avatarURL:"",
+    }
  const Auth = () => {
+    const [form, setForm] = useState(initalState)
     const [isSignup, setIsSignup] = useState(true)
-    const handleChange = ()=> {}
+    const handleChange = (e)=> {
+        setForm({...form, [e.target.name]: e.target.value});
+
+        console.log(form)
+    }
+    const handleSubmit = (event)=> {
+        event.preventDefault();
+        console.log(form)
+    }
     const switchMode = ()=> {
         setIsSignup((prevIsSignup)=> !prevIsSignup)
     }
+
   return (
     <div className='auth__form-container'>
         <div className='auth__form-container_fields'>
             <div className='auth__form-container_fields-content'>
                 <p>{isSignup ? 'Sign Up': 'Sign In'}</p>
-                <form onSubmit={()=> console.log("onsubmit auth.jsx")}>
+                <form onSubmit={handleSubmit}>
                     {isSignup && (
                         <div className='auth__form-container_fields-content_input'>
                             <label htmlFor="fullName">Full Name</label>
@@ -70,6 +88,9 @@ import signinimage from '../assets/signinimage.jpg'
                     placeholder='Confirm Password'  
                     onChange={handleChange}
                     required/>
+                </div>
+                <div className='auth__form-container_fields-content_button'>
+                    <button>{isSignup ? "Sign Up":"Sign In"}</button>
                 </div>
                 </form>
                 <div className='auth__form-container_fields-accounts'>
